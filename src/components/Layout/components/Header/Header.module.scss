@@ -1,12 +1,94 @@
 .wrapper {
-    width: 100%;
-    height: var(--default-layout-header-height, 60px);
-    box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
-    display: flex;
-    justify-content: center;
+  --search-border-radius: 92px;
+  --search-height: 46px;
+  --search-top-spacer: 9px;
+  --search-button-width: 52px;
+  width: 100%;
+  height: var(--default-layout-header-height, 60px);
+  box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+  display: flex;
+  justify-content: center;
 }
 .inner {
+  height: 100%;
+  width: var(--default-layout-width);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+.search,
+.search-result {
+  width: 360px;
+}
+
+.search {
+  position: relative;
+  background-color: rgba(22, 24, 35, 0.06);
+  height: var(--search-height);
+  border-radius: var(--search-border-radius);
+  padding-left: 16px;
+  display: flex;
+  border: 1.5px solid transparent;
+
+  input {
     height: 100%;
-    width: var(--default-layout-width);
-    background-color: #ccc;
+    color: var(--black);
+    font-size: 1.6rem;
+    background-color: transparent;
+    caret-color: var(--primary);
+    flex: 1;
+  }
+  input:not(:placeholder-shown) ~ .search-btn {
+    color: rgba(22, 24, 35, 0.75);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: var(--search-top-spacer);
+    height: calc(var(--search-height) - var(--search-top-spacer) * 2);
+    width: 1px;
+    right: var(--search-button-width);
+    background-color: rgba(22, 24, 35, 0.12);
+  }
+  &:focus-within {
+    border-color: rgba(22, 24, 35, 0.2);
+  }
+}
+
+.clear,
+.loading {
+  position: absolute;
+  right: calc(var(--search-button-width) + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(22, 24, 35, 0.34);
+}
+
+.search-title {
+  font-size: 1.4rem;
+  line-height: 20px;
+  font-weight: 600;
+  color: rgba(22, 24, 35, 0.5);
+  padding: 5px 12px;
+}
+
+.search-btn {
+  width: var(--search-button-width);
+  height: 100%;
+  border-top-right-radius: var(--search-border-radius);
+  border-bottom-right-radius: var(--search-border-radius);
+  font-size: 1.8rem;
+  color: rgba(22, 24, 35, 0.34);
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(22, 24, 35, 0.03);
+  }
+  &:active {
+    background-color: rgba(22, 24, 35, 0.06);
+  }
 }

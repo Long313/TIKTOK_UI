@@ -14,7 +14,7 @@ import {
   faUser,
   faCoins,
   faGear,
-  faSignOut
+  faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react";
 import HeadlessTippy from "@tippyjs/react/headless";
@@ -25,7 +25,9 @@ import images from "../../../../assets/images";
 import { Wrapper as PopperWrapper } from "../../../Popper";
 import AccountItem from "../../../AccountItem";
 import Menu from "../../../Popper/Menu";
-import 'tippy.js/dist/tippy.css';
+import "tippy.js/dist/tippy.css";
+import { UploadIcon } from "../../../Icons";
+import Image from "../Image";
 
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
@@ -99,13 +101,13 @@ function Header() {
       title: "Log out",
       to: "/logout",
       separate: true,
-    }
-  ]
+    },
+  ];
   return (
     <header className={cx("wrapper")}>
       <div className={cx("inner")}>
         <div className={cx("logo")}>
-          <img src={images.logo} alt="TikTok" />
+          <Image src={images.logo} alt="TikTok" />
         </div>
         <HeadlessTippy
           interactive
@@ -141,7 +143,7 @@ function Header() {
             <>
               <Tippy delay={[0, 200]} content="Upload video" placement="bottom">
                 <button className={cx("action-btn")}>
-                  <FontAwesomeIcon icon={faCloudArrowUp} />
+                  <UploadIcon />
                 </button>
               </Tippy>
               <Tippy delay={[0, 200]} content="Mail Box" placement="bottom">
@@ -156,11 +158,16 @@ function Header() {
               <Button primary>Login</Button>
             </>
           )}
-          <Menu items={currentUser? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+          <Menu
+            items={currentUser ? userMenu : MENU_ITEMS}
+            onChange={handleMenuChange}
+          >
             {currentUser ? (
-              <img
+              <Image
                 className={cx("user-avatar")}
-                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/c0e5acb353efad347ae0ba5a87574f1d~c5_100x100.jpeg?x-expires=1675566000&x-signature=7q8UWFINPBd0R6Ul6POoTrs5McI%3D" alt="Nguyen Van A"
+                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/c0e5acb353efad347ae0ba5a87574f1d~c5_100x100.jpeg?x-expires=1675566000&x-signature=7q8UWFINPBd0R6Ul6POoTrs5McI%3D"
+                alt="Nguyen Van A"
+                // fallback="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg"
               />
             ) : (
               <button className={cx("more-btn")}>

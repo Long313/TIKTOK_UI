@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   faCircleXmark,
   faSpinner,
@@ -8,6 +8,7 @@ import HeadlessTippy from "@tippyjs/react/headless";
 import { Wrapper as PopperWrapper } from "../../../Popper";
 import * as searchServices from "../../../../services/searchService";
 import AccountItem from "../../../AccountItem";
+import ListMenu from "../../../Popper/Menu/ListMenu";
 import classNames from "classnames/bind";
 import styles from "./Search.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,23 +18,23 @@ const cx = classNames.bind(styles);
 function Search() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const [showResult, setShowResult] = useState(true);
+  const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
-  const debounced = useDebounce(searchValue, 500);
+  const debouncedValue = useDebounce(searchValue, 500);
   useEffect(() => {
-    if (!debounced.trim()) {
+    if (!debouncedValue.trim()) {
       setSearchResult([]);
       return;
     }
     const fetchApi = async () => {
       setLoading(true);
-      const result = await searchServices.search(debounced);
+      const result = await searchServices.search(debouncedValue);
       setSearchResult(result);
 
       setLoading(false);
     };
     fetchApi();
-  }, [debounced]);
+  }, [debouncedValue]);
   const inputRef = useRef();
   const handleClear = () => {
     setSearchValue("");
@@ -49,7 +50,12 @@ function Search() {
       setSearchValue(searchValue);
     }
   };
-
+  const handleRenderListItem = useCallback((searchResult) => {
+    return searchResult;
+  },[])
+  // const handleRenderListItem =(searchResult) => {
+  //   return searchResult;
+  // }
   return ( 
     // Using a wrapper <div> or <span> tag around the reference element solves this by creating a new parentNode context. 
      <div> 
@@ -60,9 +66,7 @@ function Search() {
           <div className={cx("search-result")} tabIndex="-1" {...attrs}>
             <PopperWrapper>
               <h4 className={cx("search-title")}>Accounts</h4>
-              {searchResult.map((result) => (
-                <AccountItem key={result.id} data={result} />
-              ))}
+              <ListMenu handleSearch={handleRenderListItem(searchResult)}/>
             </PopperWrapper>
           </div>
         )}

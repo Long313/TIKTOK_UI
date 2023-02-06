@@ -55,7 +55,7 @@ const MENU_ITEMS = [
   },
 ];
 function Header() {
-  const currentUser = true;
+  const currentUser = false;
   // Handle logic
   const handleMenuChange = (menuItem) => {
     switch (menuItem.type) {
@@ -121,7 +121,7 @@ function Header() {
           ) : (
             <>
               <Button text>Upload</Button>
-              <Button primary>Login</Button>
+              <Button to='/login' primary>Login</Button>
             </>
           )}
           <Menu
